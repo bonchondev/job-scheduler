@@ -1,6 +1,7 @@
 <script lang="ts">
     import ky from "ky";
     import Button from "../components/Button.svelte";
+    export let url;
     let loading = false;
     let error: string | null;
     let ranCommand = "";
@@ -17,7 +18,7 @@
             return;
         }
         const response = ky
-            .post<Jobs>("/jobs", {
+            .post<Jobs>(`${url}/jobs`, {
                 timeout: 30000,
                 json: { kind, startDate, endDate },
                 hooks: {
