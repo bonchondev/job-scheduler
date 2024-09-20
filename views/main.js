@@ -1,22 +1,18 @@
 //@ts-ignore
-import { createInertiaApp } from "@inertiajs/svelte";
+import { createInertiaApp } from '@westacks/inertia-svelte'
+import TanStack from "./src/layouts/Layout.svelte"
 import "./app.css";
-
-function importPageComponent(name, pages) {
-  // eslint-disable-next-line no-restricted-syntax
-  for (const path in pages) {
-    if (path.endsWith(`${name.replaceAll(".", "/")}.svelte`)) {
-      return typeof pages[path] === "function" ? pages[path]() : pages[path];
-    }
-  }
-
-  throw new Error(`Page not found: ${name}`);
-}
 
 createInertiaApp({
   //@ts-ignore
-  resolve: (name) =>
-    importPageComponent(name, import.meta.glob("./src/**/*.svelte")),
+  resolve: (name) => {
+    const page = import.meta.glob('./src/pages/**/*.svelte', { eager: true })[`./src/pages/${name}.svelte`]
+    page.layout = page.layout
+        ? (Array.isArray(page.layout) ? [TanStack, ...page.layout] : [TanStack, page.layout])
+        : [TanStack]
+
+    return page
+  },
   //@ts-ignore
   setup({ el, App, props }) {
     new App({ target: el, props });
