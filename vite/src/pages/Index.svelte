@@ -1,7 +1,7 @@
 <script lang="ts">
     import ky from "ky";
     import Button from "../components/Button.svelte";
-    export let url;
+    export let url = "";
     let loading = false;
     let error: string | null;
     let ranCommand = "";

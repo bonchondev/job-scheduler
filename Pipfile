@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 flask = "==3.0.3"
 flask-inertia = "==0.9"
-flask-vite = "==0.5.1"
+flask-vite = {path = "./pkg/flask_vite-0.5.2-py3-none-any.whl"}
 
 [dev-packages]
 
