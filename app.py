@@ -25,7 +25,7 @@ def submit_jobs():
     kind = req.get("kind")
     start_date = req.get("startDate")
     end_date = req.get("endDate")
-    sleep(5)
+    sleep(1)
     command = ""
     match kind:
         case "date-range":

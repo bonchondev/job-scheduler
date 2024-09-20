@@ -14,6 +14,12 @@ importers:
       '@inertiajs/svelte':
         specifier: ^1.2.0
         version: 1.2.0(svelte@4.2.19)
+      '@tanstack/svelte-query':
+        specifier: ^5.56.2
+        version: 5.56.2(svelte@4.2.19)
+      '@westacks/inertia-svelte':
+        specifier: ^1.0.29
+        version: 1.0.29(svelte@4.2.19)
       ky:
         specifier: ^1.7.1
         version: 1.7.1
@@ -341,11 +347,24 @@ packages:
       svelte: ^4.0.0 || ^5.0.0-next.0
       vite: ^5.0.0
 
+  '@tanstack/query-core@5.56.2':
+    resolution: {integrity: sha512-gor0RI3/R5rVV3gXfddh1MM+hgl0Z4G7tj6Xxpq6p2I03NGPaJ8dITY9Gz05zYYb/EJq9vPas/T4wn9EaDPd4Q==}
+
+  '@tanstack/svelte-query@5.56.2':
+    resolution: {integrity: sha512-3oPvqr9y+WAryqWLgp2Vam/vZAJ1uS7nIxZd4SJeS5A3XolKC/8L2eDmLTSPFmRwu1W95uweWe907e1eoAJZiQ==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
+
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
   '@types/node@22.5.1':
     resolution: {integrity: sha512-KkHsxej0j9IW1KKOOAA/XBA0z08UFSrRQHErzEfA3Vgq57eXIMYboIlHJuYIfd+lwCQjtKqUu3UnmKbtUc9yRw==}
+
+  '@westacks/inertia-svelte@1.0.29':
+    resolution: {integrity: sha512-4x/ThhCxJOb1FLtZDit7GXtkxepsd/sMTmlFm1IfwtEn0ezx+U4uTLFR6zgR6jPPPAZTGO2KKkFHKOZ2d3teBw==}
+    peerDependencies:
+      svelte: ^4.0.0
 
   acorn@8.12.1:
     resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
@@ -847,6 +866,9 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
@@ -1549,11 +1571,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@tanstack/query-core@5.56.2': {}
+
+  '@tanstack/svelte-query@5.56.2(svelte@4.2.19)':
+    dependencies:
+      '@tanstack/query-core': 5.56.2
+      svelte: 4.2.19
+
   '@types/estree@1.0.5': {}
 
   '@types/node@22.5.1':
     dependencies:
       undici-types: 6.19.8
+
+  '@westacks/inertia-svelte@1.0.29(svelte@4.2.19)':
+    dependencies:
+      '@inertiajs/core': 1.2.0
+      lodash: 4.17.21
+      svelte: 4.2.19
+    transitivePeerDependencies:
+      - debug
 
   acorn@8.12.1: {}
 
@@ -2130,6 +2167,8 @@ snapshots:
   lodash.clonedeep@4.5.0: {}
 
   lodash.isequal@4.5.0: {}
+
+  lodash@4.17.21: {}
 
   lru-cache@10.4.3: {}
 

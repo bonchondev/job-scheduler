@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ea57d4049eff5ced251a385cfeb13e38949ba664ca85af99b2a28d7c52c47842"
+            "sha256": "8edd121f42b5a7c5766f574f26ae52f4d9de28d043e9fb31ab38a246167a8f60"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -50,12 +50,12 @@
             "version": "==0.9"
         },
         "flask-vite": {
+            "file": "./pkg/flask_vite-0.5.1-py3-none-any.whl",
             "hashes": [
                 "sha256:ba1ccf70166dc767167d09471f7c084ba1ea07056f4d396feaea6ae0371d286c",
                 "sha256:c0525f80deac2dda29408281f7c5ea610b0edb1302c90a64f0c69e69716cd593"
             ],
-            "markers": "python_version >= '3.9' and python_version < '4.0'",
-            "path": "./pkg/flask_vite-0.5.2-py3-none-any.whl"
+            "markers": "python_version >= '3.9' and python_version < '4.0'"
         },
         "itsdangerous": {
             "hashes": [
