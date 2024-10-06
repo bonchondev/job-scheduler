@@ -1,46 +1,36 @@
 <script lang="ts">
     import ky from "ky";
     import Button from "../components/Button.svelte";
+    import { createMutation } from "@tanstack/svelte-query";
     export let url = "";
-    let loading = false;
-    let error: string | null;
-    let ranCommand = "";
     let startDate: string | null = null;
     let endDate: string | null = null;
     type Jobs = {
         command: string;
     };
-    const sendJob = async (kind: string) => {
-        error = null;
-        if (!startDate && !endDate && kind === "date-range") {
-            error =
-                "Please provide start date and/or end date before submitting";
-            return;
-        }
-        const response = ky
-            .post<Jobs>(`${url}/jobs`, {
-                timeout: 30000,
-                json: { kind, startDate, endDate },
-                hooks: {
-                    beforeRequest: [
-                        (_) => {
-                            ranCommand = "";
-                            loading = true;
-                        },
-                    ],
-                },
-            })
-            .json();
-        response
-            .then((data) => {
-                loading = false;
-                ranCommand = data.command;
-            })
-            .catch((err) => {
-                loading = false;
-                ranCommand = err.message;
-            });
-    };
+    const sendJob = createMutation({
+        mutationFn: (kind: string) => {
+            if (!startDate) {
+                startDate = null;
+            }
+            if (!endDate) {
+                endDate = null;
+            }
+            if (startDate && endDate && startDate > endDate) {
+                throw Error("Please make sure end date is past start date");
+            }
+            if (!startDate && !endDate && kind === "date-range") {
+                throw Error(
+                    "Please provide start date and/or end date before submitting",
+                );
+            }
+            return ky
+                .post<Jobs>(`${url}/jobs`, {
+                    json: { kind, startDate, endDate },
+                })
+                .json();
+        },
+    });
 </script>
 
 <main class="py-10 px-5">
@@ -50,15 +40,15 @@
             Choose one of the three <span class="font-bold">(3)</span> options to
             submit a job
         </p>
-        {#if error}
-            <p class="text-red-500 font-bold pt-5">{error}</p>
+        {#if $sendJob.isError}
+            <p class="text-red-500 font-bold pt-5">{$sendJob.error}</p>
         {/if}
     </section>
     <section id="date-range">
         <form
             on:submit={(e) => {
                 e.preventDefault();
-                sendJob("date-range");
+                $sendJob.mutate("date-range");
             }}
             class="flex flex-row gap-x-4"
         >
@@ -77,7 +67,8 @@
                 type="date"
                 class="w-50 px-3 py-3 font-bold text-lg text-white placeholder-blue-100 bg-gradient-to-r from-blue-500 to-purple-600 border-2 border-white rounded-lg focus:ring-0 focus:ring-white"
             />
-            <Button size="py-2 px-6" {loading}>Submit</Button>
+            <Button size="py-2 px-6" loading={$sendJob.isPending}>Submit</Button
+            >
         </form>
     </section>
     <section class="flex flex-row gap-x-5 py-5" id="preformatted-options">
@@ -85,14 +76,14 @@
             >Prefilled Dates:
         </label>
         <Button
-            on:click={() => sendJob("ytd")}
-            {loading}
+            on:click={() => $sendJob.mutate("ytd")}
+            loading={$sendJob.isPending}
             id="ytd"
             size="w-32 h-14">Year to Date</Button
         >
         <Button
-            on:click={() => sendJob("last-month")}
-            {loading}
+            on:click={() => $sendJob.mutate("last-month")}
+            loading={$sendJob.isPending}
             id="last-month"
             size="w-32 h-14">Last Month</Button
         >
@@ -100,10 +91,10 @@
     <section id="commands-run" class="pt-3">
         <div class="bg-slate-300 h-40 p-3">
             Submitted:
-            {#if loading}
+            {#if $sendJob.isPending}
                 <span class="font-semibold">Loading...</span>
-            {:else}
-                <span class="font-bold">{ranCommand}</span>
+            {:else if $sendJob.isSuccess}
+                <span class="font-bold">{$sendJob.data.command}</span>
             {/if}
         </div>
     </section>
