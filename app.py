@@ -26,19 +26,19 @@ def submit_jobs():
     start_date = req.get("startDate")
     end_date = req.get("endDate")
     sleep(3)
-    command = ""
+    command = "bash start_jobs.sh "
     match kind:
         case "date-range":
             if end_date is None:
-                command = f"bash start_jobs.sh --start_date {start_date}"
+                command += f"--start_date {start_date}"
             elif start_date is None:
-                command = f"bash start_jobs.sh --end_date {end_date}"
+                command += f"--end_date {end_date}"
             else:
-                command = f"bash start_jobs.sh --start_date {start_date} --end_date {end_date}"
+                command += f"--start_date {start_date} --end_date {end_date}"
         case "ytd":
-            command = "bash start_jobs.sh --year-to-date"
+            command += "--year-to-date"
         case "last-month":
-            command = "bash start_jobs.sh --last_month"
+            command += "--last_month"
     return {"command": command}
 
 

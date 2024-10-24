@@ -1,6 +1,7 @@
 //@ts-ignore
 import { createInertiaApp } from "@inertiajs/svelte";
 import Layout from './src/layouts/Layout.svelte';
+import {mount} from "svelte";
 import "./app.css";
 
 createInertiaApp({
@@ -15,6 +16,6 @@ createInertiaApp({
   },
   //@ts-ignore
   setup({ el, App, props }) {
-    new App({ target: el, props });
+    mount(App, { target: el, props });
   },
 });
