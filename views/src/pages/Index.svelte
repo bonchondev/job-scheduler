@@ -7,6 +7,11 @@
     type Jobs = {
         command: string;
     };
+    type ButtonOpts = {
+        text: string;
+        kind: string;
+        size?: string;
+    };
     const sendJob = createMutation({
         mutationFn: (kind: string) => {
             if (!startDate) {
@@ -54,7 +59,7 @@
 </svg>
 {/snippet}
 
-{#snippet button(opts: {text: string;kind: string;size?: string; } = {text: '', kind: '',size : "w-40 h-20"})}
+{#snippet button(opts: ButtonOpts = {text: '', kind: '',size : "w-40 h-20"})}
 <button
     onclick={()=>$sendJob.mutate(opts.kind)}
     id={opts.kind}
