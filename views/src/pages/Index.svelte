@@ -37,6 +37,56 @@
     });
 </script>
 
+<main class="py-10 px-5">
+    <nav class="font-bold text-6xl pb-5 pl-1 text-blue-700">Job Submission</nav>
+    <section id="user-info" class="px-1 pb-6 text-base">
+        <p>
+            Choose one of the three <span class="font-bold">(3)</span> options to
+            submit a job
+        </p>
+        {#if $sendJob.isError}
+            <p class="text-red-500 font-bold pt-5">{$sendJob.error}</p>
+        {/if}
+    </section>
+    <section id="date-range">
+        <form
+            onsubmit={(e) => {
+                e.preventDefault();
+            }}
+            class="flex flex-row gap-x-4"
+        >
+            <label for="start-date" class="pt-3 pl-1 pr-7 font-bold"
+                >Date Range:
+            </label>
+            <input
+                type="date"
+                bind:value={startDate}
+                id="start-date"
+                class="w-50 px-3 py-3 text-lg font-bold text-white placeholder-blue-100 bg-gradient-to-r from-blue-500 to-purple-600 border-2 border-white rounded-lg focus:ring-0 focus:ring-white"
+            />
+            <input
+                bind:value={endDate}
+                id="start-date"
+                type="date"
+                class="w-50 px-3 py-3 font-bold text-lg text-white placeholder-blue-100 bg-gradient-to-r from-blue-500 to-purple-600 border-2 border-white rounded-lg focus:ring-0 focus:ring-white"
+            />
+            {@render button({ text: "Submit", kind: "date-range", size: "py-2 px-6" })}
+        </form>
+    </section>
+    <section class="flex flex-row gap-x-5 py-5" id="preformatted-options">
+        <label for="last-month" class="pt-5 pl-1 font-bold"
+            >Prefilled Dates:
+        </label>
+        {@render button({ text: "Year to Date", kind: "ytd", size: "w-32 h-14" })}
+        {@render button({ text: "Last Month", kind: "last-month", size: "w-32 h-14" })}
+        </section>
+    <section id="commands-run" class="pt-3">
+        <div class="bg-slate-300 h-40 p-3">
+            Submitted: {@render result()}
+        </div>
+    </section>
+</main>
+
 {#snippet spinner()}
     <svg
         class="animate-spin h-5 w-5 text-gray-700"
@@ -107,52 +157,4 @@
     {/if}
 {/snippet}
 
-<main class="py-10 px-5">
-    <nav class="font-bold text-6xl pb-5 pl-1 text-blue-700">Job Submission</nav>
-    <section id="user-info" class="px-1 pb-6 text-base">
-        <p>
-            Choose one of the three <span class="font-bold">(3)</span> options to
-            submit a job
-        </p>
-        {#if $sendJob.isError}
-            <p class="text-red-500 font-bold pt-5">{$sendJob.error}</p>
-        {/if}
-    </section>
-    <section id="date-range">
-        <form
-            onsubmit={(e) => {
-                e.preventDefault();
-            }}
-            class="flex flex-row gap-x-4"
-        >
-            <label for="start-date" class="pt-3 pl-1 pr-7 font-bold"
-                >Date Range:
-            </label>
-            <input
-                type="date"
-                bind:value={startDate}
-                id="start-date"
-                class="w-50 px-3 py-3 text-lg font-bold text-white placeholder-blue-100 bg-gradient-to-r from-blue-500 to-purple-600 border-2 border-white rounded-lg focus:ring-0 focus:ring-white"
-            />
-            <input
-                bind:value={endDate}
-                id="start-date"
-                type="date"
-                class="w-50 px-3 py-3 font-bold text-lg text-white placeholder-blue-100 bg-gradient-to-r from-blue-500 to-purple-600 border-2 border-white rounded-lg focus:ring-0 focus:ring-white"
-            />
-            {@render button({ text: "Submit", kind: "date-range", size: "py-2 px-6" })}
-        </form>
-    </section>
-    <section class="flex flex-row gap-x-5 py-5" id="preformatted-options">
-        <label for="last-month" class="pt-5 pl-1 font-bold"
-            >Prefilled Dates:
-        </label>
-        {@render button({ text: "Year to Date", kind: "ytd", size: "w-32 h-14" })}
-        {@render button({ text: "Last Month", kind: "last-month", size: "w-32 h-14" })}
-        </section>
-    <section id="commands-run" class="pt-3">
-        <div class="bg-slate-300 h-40 p-3">
-            Submitted: {@render result()}
-        </div>
-    </section>
-</main>
+
